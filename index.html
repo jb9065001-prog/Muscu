@@ -339,10 +339,92 @@ details.pw .wlist{padding-top:2px}
   .plan-row{grid-template-columns:74px 1fr auto}
   .t-time{font-size:38px}
 }
+
+/* ===== Build 9 : mise en page adaptative, en-tête rétractable, minuteur, graphiques ===== */
+/* En-tête qui se range quand on descend (téléphone et tablette tactile) et revient dès qu'on remonte un peu */
+.top{transition:transform .26s cubic-bezier(.3,.7,.3,1)}
+.top.hide{transform:translateY(calc(-100% - env(safe-area-inset-top,0px) - 4px))}
+/* Rangées d'exercices : une colonne sur téléphone, deux sur grand écran (les supersets restent côte à côte) */
+.exrow{display:grid;gap:14px;min-width:0}
+.exrow>*{min-width:0}
+/* Colonnes de cartes (Plan, Progrès, Règles) : sur téléphone elles disparaissent (display:contents) et l'ordre est donné par « order » */
+.pcol{display:contents}
+.pcol>*{animation:rise .34s cubic-bezier(.2,.7,.3,1) both}
+/* Minuteur : bouton son + signal visuel de fin */
+.t-ico{width:42px;height:42px;padding:0;display:grid;place-items:center;border-radius:50%;border:1.5px solid var(--line);background:var(--surface-2);color:inherit;cursor:pointer;flex:none}
+.t-ico:active{transform:scale(.92)}
+.t-ico .off{display:none}
+.t-ico[aria-pressed="false"] .on{display:none}
+.t-ico[aria-pressed="false"] .off{display:block}
+.t-ico[aria-pressed="false"]{opacity:.6}
+.timer.end .t-ico{border-color:rgba(255,255,255,.45);background:transparent}
+@keyframes endpulse{0%,100%{filter:none}50%{filter:brightness(1.18)}}
+.timer.end{animation:endpulse 1s ease-in-out 3}
+/* Graphiques : ligne de repère, carte de régularité, barres par muscle */
+.viz .ref{stroke:var(--warn);stroke-width:1.4;stroke-dasharray:5 4}
+.viz .reft{font-family:var(--f-mono);font-size:10.5px;fill:var(--warn)}
+.heat{display:grid;grid-template-columns:16px repeat(var(--cols),minmax(0,1fr));gap:3px;align-items:center}
+.heat .hl{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);text-align:center;font-weight:600}
+.heat .hx{display:block;width:0;height:14px;justify-self:center;white-space:nowrap;font-family:var(--f-mono);font-size:10px;color:var(--muted)}
+.heat .hx span{display:inline-block;transform:translateX(-50%)}
+.heat i{display:block;aspect-ratio:1;max-height:26px;border-radius:5px;background:var(--surface-2)}
+.heat i.ok{background:var(--good)}
+.heat i.cur{background:transparent;box-shadow:inset 0 0 0 2px var(--accent)}
+.heat i.fut{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.heat i.sk{background:transparent}
+.heat-leg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--muted);margin-top:4px}
+.heat-leg i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:5px;vertical-align:-2px;background:var(--surface-2)}
+.heat-leg i.ok{background:var(--good)}
+.heat-leg i.cur{background:transparent;box-shadow:inset 0 0 0 2px var(--accent)}
+.mbars{display:grid;gap:7px}
+.mb{display:grid;grid-template-columns:minmax(0,122px) 1fr 38px;gap:9px;align-items:center;font-size:13px}
+.mb>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mb .bar{height:12px;border-radius:999px;background:var(--surface-2);overflow:hidden}
+.mb .bar b{display:block;height:100%;border-radius:999px;background:var(--accent)}
+.mb em{font-style:normal;font-family:var(--f-mono);font-size:12px;text-align:right;color:var(--muted)}
+
+.t-plan #ghcard{order:6}
+.t-plan #data{order:7}
+@media (max-width:560px){.wk-title{font-size:23px}.phase{padding:5px 9px;font-size:11.5px}}
+/* Tablette en paysage / petit ordinateur : on garde une colonne, un peu plus large */
+@media (min-width:768px) and (max-width:1023px){
+  .wrap{max-width:860px}
+}
+/* Ordinateur (Mac, grand écran Samsung) : la semaine et les onglets passent dans une barre latérale */
+@media (min-width:1024px){
+  body{padding-left:300px;padding-top:0}
+  body::before{display:none}
+  .top{position:fixed;left:0;top:0;bottom:0;width:300px;overflow-y:auto;border-bottom:0;border-right:1px solid var(--line);display:flex;flex-direction:column;transform:none!important;transition:none}
+  .top .wrap{max-width:none;margin:0;padding-inline:18px}
+  .top-in{padding-block:22px 6px;gap:16px}
+  .brand-row{flex-direction:column;align-items:flex-start;gap:10px}
+  .sync{max-width:100%}
+  .weekbar{flex-wrap:wrap;row-gap:12px}
+  .wk-mid{flex:1 1 100%;order:-1}
+  .phase{flex:1;text-align:center}
+  .tabs-scroll{overflow:visible}
+  .tabs{flex-direction:column;width:auto;min-width:0;gap:4px;padding-block:6px 24px}
+  .tab{flex-direction:row;align-items:center;justify-content:space-between;gap:12px;padding:10px 38px 10px 14px;border-radius:16px;box-shadow:none;background:transparent;min-width:0}
+  .tab:hover{background:var(--surface-2)}
+  .tab[aria-selected="true"]{background:var(--accent);box-shadow:0 6px 18px -8px var(--accent)}
+  .tab.done::after{top:50%;right:14px;transform:translateY(-50%)}
+  main.wrap{max-width:1120px;padding-inline:32px;padding-block:28px 150px}
+  .timer{left:auto;right:24px;bottom:20px;width:min(460px,calc(100vw - 348px));border:1px solid var(--line);border-radius:24px;padding-bottom:0}
+  .timer .wrap{padding-inline:20px}
+  .t-bar{margin:0 20px 14px}
+  .prose{max-width:none}
+}
+/* Grand écran : deux colonnes */
+@media (min-width:1280px){
+  .exrow.two{grid-template-columns:1fr 1fr;align-items:start}
+  .t-plan,.t-progres,.t-regles{grid-template-columns:1fr 1fr;align-items:start}
+  .t-plan>.hero-wk,.t-progres>.s-head{grid-column:1/-1}
+  .pcol{display:grid;gap:14px;align-content:start;min-width:0}
+}
 </style>
 </head>
 <body>
-<header class="top">
+<header class="top" id="top">
   <div class="wrap top-in">
     <div class="brand-row">
       <div class="brand"><b>Carnet</b> · V6.2 <span class="bld" id="bld"></span></div>
@@ -363,7 +445,7 @@ details.pw .wlist{padding-top:2px}
 <div id="timer" class="timer" hidden>
   <div class="wrap timer-in">
     <div class="t-info"><span id="tLabel" class="t-label">Repos</span><span id="tTime" class="t-time">0:00</span></div>
-    <div class="t-btns"><button id="tPlus" class="t-btn" type="button">+15 s</button><button id="tStop" class="t-btn" type="button">Fermer</button></div>
+    <div class="t-btns"><button id="tPlus" class="t-btn" type="button">+15 s</button><button id="tSnd" class="t-ico" type="button" aria-pressed="true" aria-label="Son du minuteur : activé"><svg class="on" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9.5a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4s2-1.500 2-6.500Z"/><path d="M10 19.500a2.200 2.200 0 0 0 4 0"/></svg><svg class="off" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9.5a6 6 0 0 1 9-5.200M18 9.500c0 5 2 6.500 2 6.500H7"/><path d="M10 19.500a2.200 2.200 0 0 0 4 0"/><path d="M3 3l18 18"/></svg></button><button id="tStop" class="t-btn" type="button">Fermer</button></div>
   </div>
   <div class="t-bar"><span id="tFill"></span></div>
 </div>
@@ -374,7 +456,7 @@ details.pw .wlist{padding-top:2px}
 "use strict";
 
 /* ---------- Calendrier (numérotation de la V6.2 : S3 = lundi 19 octobre 2026) ---------- */
-var BUILD=8, BUILD_DATE="19 oct. 2026";
+var BUILD=9, BUILD_DATE="19 oct. 2026";
 var FIRST=3, LAST=21, HFIRST=-36; /* HFIRST : semaine du 19 janv. 2026 ; les semaines avant S3 = ton historique, visible dans les graphiques */
 var MONTHS=["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
 function dOf(n,off){return new Date(2026,9,19+(n-3)*7+(off||0));}
@@ -1291,14 +1373,28 @@ function sessionHead(sid,n){
 }
 function warmBlock(kind){var W=WARM[kind];return '<details class="warm"'+(state.cues?" open":"")+'><summary>Échauffement · '+W.dur+'</summary><ol class="wlist">'+W.items.map(function(it){return '<li><div class="wi"><span>'+esc(it[0])+'</span><span class="dose">'+esc(it[1])+'</span></div></li>';}).join("")+'</ol></details>';}
 
+/* Regroupe les exercices en rangées : un superset reste côte à côte, deux exercices simples se partagent une rangée (grand écran) */
+function exRows(s,n){
+  var items=s.ex.map(function(ex){return {ex:ex,h:exCard(ex,n)};});
+  if(s.fin) items.push({ex:{id:s.fin},h:finCard(s.fin,n)});
+  var used={},out="";
+  for(var i=0;i<items.length;i++){
+    if(used[i]) continue;
+    used[i]=1;var row=[items[i]],j=-1,ex=items[i].ex;
+    if(ex.ss){for(var k=i+1;k<items.length;k++){if(!used[k]&&items[k].ex.id===ex.ss){j=k;break;}}}
+    else{for(var m=i+1;m<items.length;m++){if(!used[m]){if(!items[m].ex.ss) j=m;break;}}}
+    if(j>=0){used[j]=1;row.push(items[j]);}
+    out+='<div class="exrow'+(row.length>1?' two':'')+'">'+row.map(function(r){return r.h;}).join("")+'</div>';
+  }
+  return out;
+}
 function renderSession(sid){
   var n=state.week,s=S[sid],p=phase(n);
   if(sid==="E") return renderE(n);
   var h=sessionHead(sid,n);
   if(sid==="D"&&p.noD) return h+'<p class="note warn">Pas de séance D cette semaine : tests le '+TESTS[n]+'. Voir l’onglet Plan.</p>';
   h+=warmBlock(s.warm);
-  s.ex.forEach(function(ex){h+=exCard(ex,n);});
-  if(s.fin) h+=finCard(s.fin,n);
+  h+=exRows(s,n);
   h+='<p class="note">'+esc(COOL)+'</p>';
   return h+sessFoot(sid,n);
 }
@@ -1333,34 +1429,39 @@ function renderPlan(){
   var n=state.week,p=phase(n),o=state.weeks[n]||{},done=o.done||{},body=o.body||{},tests=o.tests||{};
   var h='<section class="card hero-wk"><div class="hero-num">Semaine '+n+' <span>/ S21</span></div><div class="wk-sub">'+weekRange(n)+' · '+esc(p.name)+'</div><p class="hero-txt">'+esc(p.txt)+'</p></section>';
   var days=[["Lundi","A"],["Mardi","B"],["Mercredi","E"],["Jeudi","C"],["Vendredi",null,"Repos actif : 8 000 à 10 000 pas. Si tu es frais, 30 min de vélo ou de marche en plus."],["Samedi","D"],["Dimanche",null,"Repos complet"]];
-  h+='<section class="card"><h2 class="h2">La semaine</h2><div class="plan">';
+  var hero=h;h='';
+  h+='<section class="card" style="order:1"><h2 class="h2">La semaine</h2><div class="plan">';
   days.forEach(function(d){
     if(d[1]==="D"&&p.noD){h+='<div class="plan-row"><span class="p-d">'+d[0]+'</span><span class="p-s"><small>Pas de séance D : tests le '+esc(TESTS[n])+'</small></span><span></span></div>';return;}
     if(d[1]){var s=S[d[1]],ok=!!done[d[1]];
       h+='<button type="button" class="plan-row" data-tab="'+d[1]+'"><span class="p-d">'+d[0]+'</span><span class="p-s"><b>'+d[1]+'</b>'+esc(s.title)+' <small>· '+(d[1]==="E"?p.cardio+" min":esc(s.dur))+'</small></span><span class="p-st'+(ok?" ok":"")+'">'+(ok?"✓ faite":"à faire")+'</span></button>';
     } else h+='<div class="plan-row"><span class="p-d">'+d[0]+'</span><span class="p-s"><small>'+esc(d[2])+'</small></span><span></span></div>';
   });
-  h+='</div></section>';
-  h+=progCard();
+  h+='</div></section>';var sWeek=h;h='';
+  h+=progCard();var sProg=h.replace('<section class="card">','<section class="card" style="order:2">');h='';
+  var sTests="";
   if(TESTS[n]){
     h+='<section class="card" data-testw="'+n+'"><h2 class="h2">Tests · '+esc(TESTS[n])+'</h2><p class="p-mut" style="margin-bottom:12px">À froid, après 48 à 72 h sans tirage lourd. Tractions strictes, même amplitude ; pompes strictes, corps gainé ; saut : meilleur de 3 essais.</p><div class="meas">';
     [["pull","Tractions strictes max"],["push","Pompes strictes max"],["jump","Saut vertical (cm)"]].forEach(function(t){h+='<label class="fld"><span>'+t[1]+'</span><input class="in in-num" id="test-'+t[0]+'" data-test="'+t[0]+'" inputmode="decimal" autocomplete="off" value="'+esc(tests[t[0]]||"")+'"></label>';});
     h+='</div><p class="p-mut" style="margin-top:10px">Référence de départ : 16 tractions strictes (fin septembre).</p></section>';
+    sTests=h.replace('<section class="card"','<section style="order:3" class="card"');h='';
   }
-  h+='<section class="card"><h2 class="h2">Le calendrier</h2><div class="cal">';
+  h+='<section class="card" style="order:4"><h2 class="h2">Le calendrier</h2><div class="cal">';
   for(var k=FIRST;k<=LAST;k++){var pk=phase(k),dc=doneCount(k);
     h+='<button type="button" class="wc'+(pk.light?" light":"")+(pk.key==="vac"?" vac":"")+(k===n?" cur":"")+'" data-week="'+k+'" aria-label="Semaine '+k+', '+esc(pk.name)+'"><span class="n">S'+k+'</span><span class="p">'+esc(pk.short)+'</span><span class="c">'+(dc?dc+"/5":"")+'</span></button>';}
   h+='</div><div class="legend"><span><i></i>Entraînement normal</span><span><i class="l"></i>Semaine allégée (examens, affûtage)</span><span><i class="v"></i>Vacances</span></div></section>';
-  h+='<section class="card" data-bodyw="'+n+'"><h2 class="h2">Mesures de la semaine</h2><p class="p-mut" style="margin-bottom:12px">Poids : moyenne des pesées du matin. Tour de taille : au nombril, toutes les 4 semaines. Cap : +0,25 à +0,5 kg par mois.</p><div class="meas">';
+  var sCal=h;h='';
+  h+='<section class="card" style="order:5" data-bodyw="'+n+'"><h2 class="h2">Mesures de la semaine</h2><p class="p-mut" style="margin-bottom:12px">Poids : moyenne des pesées du matin. Tour de taille : au nombril, toutes les 4 semaines. Cap : +0,25 à +0,5 kg par mois.</p><div class="meas">';
   h+='<label class="fld"><span>Poids moyen (kg)</span><input class="in in-num" id="body-weight" data-body="weight" inputmode="decimal" autocomplete="off" placeholder="61,0" value="'+esc(body.weight||"")+'"></label>';
   h+='<label class="fld"><span>Tour de taille (cm)</span><input class="in in-num" id="body-waist" data-body="waist" inputmode="decimal" autocomplete="off" placeholder="—" value="'+esc(body.waist||"")+'"></label></div>';
   var rows=[];for(var i=HFIRST;i<=LAST;i++){var b=(state.weeks[i]&&state.weeks[i].body)||{},t=(state.weeks[i]&&state.weeks[i].tests)||{};if(b.weight||b.waist||t.pull||t.push||t.jump) rows.push('<tr><td>'+wLab(i)+'</td><td>'+esc(b.weight||"–")+'</td><td>'+esc(b.waist||"–")+'</td><td>'+esc(t.pull||"–")+'</td><td>'+esc(t.push||"–")+'</td><td>'+esc(t.jump||"–")+'</td></tr>');}
   if(rows.length) h+='<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Sem.</th><th>Poids</th><th>Taille</th><th>Tractions</th><th>Pompes</th><th>Saut</th></tr></thead><tbody>'+rows.join("")+'</tbody></table></div>';
-  return h+'</section>'+ghCard()+dataCard();
+  h+='</section>';var sBody=h;
+  return hero+'<div class="pcol">'+sWeek+sCal+sBody+'</div><div class="pcol">'+sProg+sTests+ghCard()+dataCard()+'</div>';
 }
 
 function renderRules(){
-  return ''+
+  var all=''+
   '<section class="card prose"><h2 class="h2">Le principe de ce carnet</h2><p>Chaque exercice affiché est la <b>version de base</b>, pensée comme si tu n’avais aucune douleur. Quand une contrainte apparaît (genou, épaule, matériel, météo), ouvre le menu <b>Version</b> de l’exercice et choisis la variante. Elle reste en place les semaines suivantes jusqu’à ce que tu remettes « Base ».</p><p>La consigne de progression ne compare que des séances faites dans la même version.</p><p>Tes données restent sur ce téléphone. Pense à exporter une sauvegarde depuis l’onglet Plan ; pour faire le point avec un coach, envoie-lui l’export tableur (CSV).</p></section>'+
   '<section class="card prose"><h2 class="h2">Lire une prescription</h2><ul>'+
   '<li><b>4 × 4-6</b> : 4 séries, entre 4 et 6 répétitions.</li>'+
@@ -1393,11 +1494,15 @@ function renderRules(){
   '<section class="card prose"><h2 class="h2">Matériel prévu par la V6.2</h2><ul>'+
   '<li>Ceinture de lest à chaîne (tractions, chin-ups, dips), barres à dips stables, 2 disques de 5 kg.</li>'+
   '<li>En attendant : gilet de 10 kg, dips entre deux chaises calées à +10 kg maximum, ou la version « Pompes lestées » des dips.</li></ul></section>';
+  var parts=all.split("</section>").filter(function(x){return x;}).map(function(p,i){return p.replace('<section class="card prose">','<section class="card prose" style="order:'+(i+1)+'">')+"</section>";});
+  function col(ix){return '<div class="pcol">'+ix.map(function(i){return parts[i];}).join("")+'</div>';}
+  return col([0,2,4,6])+col([1,3,5,7]);
 }
 
 function render(){
   pendingRender=false;renderHeader();
   var t=state.tab;
+  main.className="wrap main t-"+t;
   main.innerHTML=t==="plan"?renderPlan():t==="regles"?renderRules():t==="progres"?renderProgress():renderSession(t);
 }
 
@@ -1418,7 +1523,11 @@ function niceTicks(lo,hi,count){
   return out;
 }
 var chartSeq=0;
-function chartW(){var w=main.clientWidth-34;return Math.max(260,Math.min(720,w));}
+function chartW(){
+  var cs=getComputedStyle(main),inner=main.clientWidth-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0);
+  var cols=(state.tab==="progres"&&window.matchMedia("(min-width:1280px)").matches)?2:1;
+  return Math.max(260,Math.min(720,Math.floor((inner-(cols-1)*14)/cols-38)));
+}
 function chart(cfg){
   /* cfg : {title, sub, type:'line'|'col', pts:[{n,y,tip}], unit, zero, max} — une seule série, une seule échelle */
   var id="ch"+(++chartSeq), pts=cfg.pts.filter(function(p){return p.y!=null;});
@@ -1429,11 +1538,13 @@ function chart(cfg){
   var vals=pts.map(function(p){return p.y;}),lo=Math.min.apply(null,vals),hi=Math.max.apply(null,vals);
   if(cfg.type==="col"||cfg.zero) lo=0;
   if(cfg.max!=null) hi=Math.max(hi,cfg.max);
+  if(cfg.ref){lo=Math.min(lo,cfg.ref.v);hi=Math.max(hi,cfg.ref.v);}
   var ticks=cfg.ticks||niceTicks(lo,hi,3),tmin=ticks[0],tmax=ticks[ticks.length-1];
   function Y(v){return y0-(v-tmin)/((tmax-tmin)||1)*(y0-y1);}
   var s='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="'+esc(cfg.title)+'" data-chart="'+id+'">';
   for(var n=lo0;n<=LAST;n++){if(phase(n).light) s+='<rect class="band" x="'+(X(n)-bw/2).toFixed(1)+'" y="'+y1+'" width="'+bw.toFixed(1)+'" height="'+(y0-y1)+'"/>';}
   ticks.forEach(function(t){var y=Y(t).toFixed(1);s+='<line class="grid" x1="'+x0+'" x2="'+x1+'" y1="'+y+'" y2="'+y+'"/><text class="ax" x="'+(x0-6)+'" y="'+y+'" dy="3.5" text-anchor="end">'+String(Math.round(t*100)/100).replace(".",",")+'</text>';});
+  if(cfg.ref){var ry=Y(cfg.ref.v).toFixed(1);s+='<line class="ref" x1="'+x0+'" x2="'+x1+'" y1="'+ry+'" y2="'+ry+'"/><text class="reft" x="'+(x1-2)+'" y="'+(Y(cfg.ref.v)-5).toFixed(1)+'" text-anchor="end">'+esc(cfg.ref.label||"")+'</text>';}
   if(lo0<FIRST) s+='<line class="sep" x1="'+(X(FIRST)-bw/2).toFixed(1)+'" x2="'+(X(FIRST)-bw/2).toFixed(1)+'" y1="'+(y1-6)+'" y2="'+y0+'"/>';
   var labs=[],used=[];
   function addLab(n,t){var x=X(n);for(var i=0;i<used.length;i++){if(Math.abs(used[i]-x)<34) return;}used.push(x);labs.push([x,t]);}
@@ -1493,6 +1604,47 @@ function exSeries(ex,alt){
   }
   return {k:k,rows:out};
 }
+function heatmap(){
+  var cur=todayWeek(),cols=[],ok=0,plan=0;for(var n=FIRST;n<=LAST;n++) cols.push(n);
+  var c='<span></span>'+cols.map(function(n){return '<span class="hx">'+(((n-FIRST)%3===0)?'<span>S'+n+'</span>':'')+'</span>';}).join("");
+  ORDER.forEach(function(sid){
+    c+='<span class="hl">'+sid+'</span>';
+    cols.forEach(function(n){
+      var p=phase(n),o=state.weeks[n]||{},d=!!(o.done&&o.done[sid]),cls;
+      if(sid==="D"&&p.noD&&!d) cls="sk";
+      else if(d){cls="ok";ok++;if(n<=cur) plan++;}
+      else if(n<cur){cls="";plan++;}
+      else if(n===cur){cls="cur";plan++;}
+      else cls="fut";
+      c+='<i'+(cls?' class="'+cls+'"':'')+' title="S'+n+' · '+sid+'"></i>';
+    });
+  });
+  var aria=ok+" séance"+(ok>1?"s":"")+" faite"+(ok>1?"s":"")+" sur "+plan+" prévues jusqu’ici";
+  return '<div class="viz"><div class="viz-h"><span class="viz-t">Régularité</span><span class="viz-s">une case = une séance</span></div><div class="heat" style="--cols:'+cols.length+'" role="img" aria-label="'+esc(aria)+'">'+c+'</div><div class="heat-leg"><span><i class="ok"></i>Faite</span><span><i></i>Manquée</span><span><i class="cur"></i>Semaine en cours</span></div></div>';
+}
+function muscleBars(n){
+  var tot={},any=false;
+  ORDER.forEach(function(sid){S[sid].ex.forEach(function(ex){
+    var en=entry(n,ex.id),k=setVals(en).filter(function(v){return v>0;}).length;if(!k) return;
+    var m=muscOf(ex.id,en.v||"");if(!m) return;
+    m.p.forEach(function(g){tot[g]=(tot[g]||0)+k;});m.s.forEach(function(g){tot[g]=(tot[g]||0)+k*0.5;});any=true;
+  });});
+  var head='<div class="viz-h"><span class="viz-t">Séries par muscle · S'+n+'</span><span class="viz-s">principal = 1, secondaire = ½</span></div>';
+  if(!any) return '<div class="viz">'+head+'<div class="viz-empty">Note tes reps dans les séances de la semaine affichée (flèches en haut pour changer de semaine).</div></div>';
+  var keys=Object.keys(tot).sort(function(a,b){return tot[b]-tot[a];}),mx=tot[keys[0]]||1;
+  return '<div class="viz">'+head+'<div class="mbars">'+keys.map(function(g){return '<div class="mb"><span>'+esc(cap(MN[g]||g))+'</span><div class="bar"><b style="width:'+Math.max(3,Math.round(100*tot[g]/mx))+'%"></b></div><em>'+fmtN(tot[g])+'</em></div>';}).join("")+'</div></div>';
+}
+function weekVolume(n){
+  var tv=0;
+  ORDER.forEach(function(sid){S[sid].ex.forEach(function(ex){
+    var en=entry(n,ex.id);if(!en||!en.sets) return;
+    var alt=null;(ex.alts||[]).forEach(function(a){if(a.k===(en.v||"")) alt=a;});
+    if(((alt&&alt.rx&&alt.rx.unit)||ex.unit)==="s") return;
+    var ld=parseLoad(en.load);if(!(ld>0)) return;
+    tv+=ld*sum(setVals(en));
+  });});
+  return tv;
+}
 function renderProgress(){
   chartSeq=0;
   var groups=progOptions(),all=[];groups.forEach(function(g){all=all.concat(g.items);});
@@ -1503,44 +1655,69 @@ function renderProgress(){
   }
   var item=all.filter(function(i){return i.key===sel;})[0],ex=item.ex,alt=item.alt,ser=exSeries(ex,alt),r=ser.rows;
   var unitReps=((alt&&alt.rx&&alt.rx.unit)||ex.unit)==="s"?"s":"reps";
-  var h='<section class="s-head"><div class="s-code" aria-hidden="true">↗</div><div><h1 class="s-title">Progrès</h1><p class="s-meta">Tout ce que tu notes dans les séances, semaine après semaine. Les bandes colorées sont les semaines allégées. S0 à S2 sont tes séances d’avant le 19 octobre, reprises de ton carnet.</p></div></section>';
-  h+='<section class="card stack"><div class="filter-row"><select id="prog-ex" aria-label="Exercice à afficher">';
-  groups.forEach(function(g){h+='<optgroup label="'+esc(g.label)+'">'+g.items.map(function(i){return '<option value="'+esc(i.key)+'"'+(i.key===sel?" selected":"")+'>'+esc(i.label)+'</option>';}).join("")+'</optgroup>';});
-  h+='</select></div>';
+  var head='<section class="s-head"><div class="s-code" aria-hidden="true">↗</div><div><h1 class="s-title">Progrès</h1><p class="s-meta">Tout ce que tu notes dans les séances, semaine après semaine. Les bandes colorées sont les semaines allégées. S0 à S2 sont tes séances d’avant le 19 octobre, reprises de ton carnet.</p></div></section>';
+  /* Carte 1 : l'exercice choisi */
+  var c1='<section class="card stack" style="order:1"><div class="filter-row"><select id="prog-ex" aria-label="Exercice à afficher">';
+  groups.forEach(function(g){c1+='<optgroup label="'+esc(g.label)+'">'+g.items.map(function(i){return '<option value="'+esc(i.key)+'"'+(i.key===sel?" selected":"")+'>'+esc(i.label)+'</option>';}).join("")+'</optgroup>';});
+  c1+='</select></div>';
   var first=r[0],last=r[r.length-1];
   if(ser.k==="jump"){
-    h+='<div class="tiles">'+tile("Meilleur saut",first&&first.best,last&&last.best,"cm")+'</div>';
-    h+=chart({title:"Meilleur saut",sub:"cm",type:"line",unit:"cm",pts:r.map(function(x){return {n:x.n,y:x.best};})});
+    c1+='<div class="tiles">'+tile("Meilleur saut",first&&first.best,last&&last.best,"cm")+'</div>';
+    c1+=chart({title:"Meilleur saut",sub:"cm",type:"line",unit:"cm",pts:r.map(function(x){return {n:x.n,y:x.best};})});
   } else if(ser.k==="emom"){
-    h+='<div class="tiles">'+tile("Total EMOM",first&&first.emom,last&&last.emom,"reps")+'</div>';
-    h+=chart({title:"Total de l’EMOM",sub:"reps",type:"col",unit:"reps",pts:r.map(function(x){return {n:x.n,y:x.emom,tip:x.note};})});
+    c1+='<div class="tiles">'+tile("Total EMOM",first&&first.emom,last&&last.emom,"reps")+'</div>';
+    c1+=chart({title:"Total de l’EMOM",sub:"reps",type:"line",unit:"reps",pts:r.map(function(x){return {n:x.n,y:x.emom,tip:x.note};})});
   } else {
     var withLoad=r.filter(function(x){return x.load!=null;});
     var tl=withLoad.length?tile("Charge",withLoad[0].load,withLoad[withLoad.length-1].load,"kg"):"";
-    h+='<div class="tiles">'+tl+tile(unitReps==="s"?"Secondes, toutes séries":"Reps, toutes séries",first&&first.total,last&&last.total,unitReps)+tile("1re série",first&&first.sets[0],last&&last.sets[0],unitReps)+'</div>';
-    if(!ex.noLoad||(alt&&alt.noLoad===0)) h+=chart({title:"Charge notée",sub:"kg · « 2 × 20 » compte 20",type:"line",unit:"kg",pts:r.map(function(x){return {n:x.n,y:x.load,tip:x.loadTxt};})});
-    h+=chart({title:unitReps==="s"?"Secondes, toutes séries":"Reps, toutes séries",sub:unitReps==="s"?"secondes":"reps",type:"col",unit:unitReps==="s"?"s":"reps",pts:r.map(function(x){return {n:x.n,y:x.total,tip:(x.loadTxt?x.loadTxt+" · ":"")+x.sets.join("/")};})});
+    c1+='<div class="tiles">'+tl+tile(unitReps==="s"?"Secondes, toutes séries":"Reps, toutes séries",first&&first.total,last&&last.total,unitReps)+tile("1re série",first&&first.sets[0],last&&last.sets[0],unitReps)+'</div>';
+    var hasLoad=!ex.noLoad||(alt&&alt.noLoad===0);
+    if(hasLoad) c1+=chart({title:"Charge notée",sub:"kg · « 2 × 20 » compte 20",type:"line",unit:"kg",pts:r.map(function(x){return {n:x.n,y:x.load,tip:x.loadTxt};})});
+    if(hasLoad&&unitReps==="reps") c1+=chart({title:"Force estimée (1RM)",sub:"kg · formule d’Epley sur la 1re série",type:"line",unit:"kg",empty:"Il faut une charge et une 1re série notées.",pts:r.map(function(x){var s0=x.sets[0];return {n:x.n,y:(x.load>0&&s0>0&&s0<=20)?Math.round(x.load*(1+s0/30)*10)/10:null,tip:x.loadTxt+" × "+s0};})});
+    c1+=chart({title:unitReps==="s"?"Secondes, toutes séries":"Reps, toutes séries",sub:unitReps==="s"?"secondes":"reps",type:"line",unit:unitReps==="s"?"s":"reps",pts:r.map(function(x){return {n:x.n,y:x.total,tip:(x.loadTxt?x.loadTxt+" · ":"")+x.sets.join("/")};})});
   }
-  h+='</section>';
-  /* Vue d'ensemble */
-  var done=[],cardio=[],wt=[],ws=[],trows=[];
+  c1+='</section>';
+  /* Séries hebdomadaires pour les autres cartes */
+  var cardio=[],effort=[],vol=[],wt=[],ws=[],pain=[],sleep=[],trows=[],totDone=0;
   for(var n=HFIRST;n<=LAST;n++){
-    var o=state.weeks[n]||{},dc=doneCount(n);if(dc) done.push({n:n,y:dc,tip:ORDER.filter(function(k){return o.done&&o.done[k];}).join(", ")});
+    var o=state.weeks[n]||{};totDone+=doneCount(n);
     var e1=num(entry(n,"E1").min),a8=num(entry(n,"A8").min),c9=num(entry(n,"C9").min),tot=(e1||0)+(a8||0)+(c9||0);
     if(tot) cardio.push({n:n,y:tot,tip:"endurance "+fmtN(e1||0)+" + finishers "+fmtN((a8||0)+(c9||0))});
+    var rp=["E1","A8","C9"].map(function(id){return num(entry(n,id).rpe);}).filter(function(x){return x!=null;});
+    if(rp.length) effort.push({n:n,y:sum(rp)/rp.length,tip:rp.length+" mesure"+(rp.length>1?"s":"")});
+    var tv=weekVolume(n);if(tv>0) vol.push({n:n,y:Math.round(tv),tip:"charge × reps"});
     var b=o.body||{};if(num(b.weight)!=null) wt.push({n:n,y:num(b.weight)});if(num(b.waist)!=null) ws.push({n:n,y:num(b.waist)});
     var t=o.tests||{};if(t.pull||t.push||t.jump) trows.push('<tr><td>'+wLab(n)+'</td><td>'+esc(t.pull||"–")+'</td><td>'+esc(t.push||"–")+'</td><td>'+esc(t.jump||"–")+'</td></tr>');
+    var pm=null,wh=[],sl=[],ss=o.sess||{};
+    for(var sk in ss){var pv=num(ss[sk].pain),sv=num(ss[sk].sleep);if(pv!=null){pm=Math.max(pm==null?0:pm,pv);if(pv>=3&&ss[sk].where) wh.push(sk+" : "+ss[sk].where);}if(sv!=null) sl.push(sv);}
+    if(pm!=null) pain.push({n:n,y:pm,tip:wh.join(" · ")});
+    if(sl.length) sleep.push({n:n,y:sum(sl)/sl.length,tip:sl.length+" séance"+(sl.length>1?"s":"")});
   }
-  var totDone=sum(done.map(function(d){return d.y;})),totCardio=sum(cardio.map(function(d){return d.y;}));
-  h+='<section class="card stack"><h2 class="h2" style="margin:0">Vue d’ensemble</h2>';
+  var totCardio=sum(cardio.map(function(d){return d.y;}));
   var planned=0;for(var pw=FIRST;pw<=todayWeek();pw++) planned+=phase(pw).noD?4:5;
-  h+='<div class="tiles"><div class="tile"><span class="tile-l">Séances faites</span><span class="tile-v">'+totDone+'</span><span class="tile-d">sur '+planned+' prévues jusqu’ici</span></div><div class="tile"><span class="tile-l">Cardio cumulé</span><span class="tile-v">'+fmtN(totCardio)+' min</span><span class="tile-d">endurance + finishers</span></div>'+tile("Poids moyen",wt.length?wt[0].y:null,wt.length?wt[wt.length-1].y:null,"kg")+'</div>';
-  h+=chart({title:"Séances faites",sub:"sur 5",type:"col",ticks:[0,1,2,3,4,5],unit:"",pts:done,empty:"Coche « Séance faite » en haut de chaque séance pour remplir ce graphique."});
-  h+=chart({title:"Cardio de la semaine",sub:"minutes",type:"col",unit:"min",pts:cardio,empty:"Note la durée du mercredi et les minutes des finishers."});
-  h+=chart({title:"Poids moyen",sub:"kg · cap +0,25 à +0,5 kg par mois",type:"line",unit:"kg",pts:wt,empty:"Note ton poids moyen dans l’onglet Plan."});
-  h+=chart({title:"Tour de taille",sub:"cm · alerte au-delà de +1 cm par mois",type:"line",unit:"cm",pts:ws,empty:"Note ton tour de taille dans l’onglet Plan, toutes les 4 semaines."});
-  h+='<div class="viz"><div class="viz-h"><span class="viz-t">Tests</span><span class="viz-s">référence : 16 tractions (fin sept.)</span></div>'+(trows.length?'<div class="tbl-wrap" style="margin-top:4px"><table class="tbl"><thead><tr><th>Sem.</th><th>Tractions</th><th>Pompes</th><th>Saut (cm)</th></tr></thead><tbody>'+trows.join("")+'</tbody></table></div>':'<div class="viz-empty">Tests prévus en S8, S11 et S21 : les résultats se notent dans l’onglet Plan.</div>')+'</div>';
-  return h+'</section>';
+  /* Carte 2 : l'entraînement */
+  var c2='<section class="card stack" style="order:2"><h2 class="h2" style="margin:0">Entraînement</h2>';
+  c2+='<div class="tiles"><div class="tile"><span class="tile-l">Séances faites</span><span class="tile-v">'+totDone+'</span><span class="tile-d">sur '+planned+' prévues jusqu’ici</span></div><div class="tile"><span class="tile-l">Cardio cumulé</span><span class="tile-v">'+fmtN(totCardio)+' min</span><span class="tile-d">endurance + finishers</span></div></div>';
+  c2+=heatmap();
+  c2+=chart({title:"Volume soulevé",sub:"kg · charge notée × reps",type:"line",unit:"kg",pts:vol,empty:"Note tes charges et tes reps pour voir le volume de la semaine."});
+  c2+=chart({title:"Cardio de la semaine",sub:"minutes",type:"line",unit:"min",pts:cardio,empty:"Note la durée du mercredi et les minutes des finishers."});
+  c2+=chart({title:"Effort ressenti, cardio",sub:"/10 · moyenne mercredi + finishers",type:"line",unit:"/10",pts:effort,empty:"Note l’effort /10 après le cardio du mercredi et les finishers."});
+  c2+=muscleBars(state.week);
+  c2+='</section>';
+  /* Carte 3 : le corps */
+  var c3='<section class="card stack" style="order:3"><h2 class="h2" style="margin:0">Corps et tests</h2>';
+  c3+='<div class="tiles">'+tile("Poids moyen",wt.length?wt[0].y:null,wt.length?wt[wt.length-1].y:null,"kg")+'</div>';
+  c3+=chart({title:"Poids moyen",sub:"kg · cap +0,25 à +0,5 kg par mois",type:"line",unit:"kg",pts:wt,empty:"Note ton poids moyen dans l’onglet Plan."});
+  c3+=chart({title:"Tour de taille",sub:"cm · alerte au-delà de +1 cm par mois",type:"line",unit:"cm",pts:ws,empty:"Note ton tour de taille dans l’onglet Plan, toutes les 4 semaines."});
+  c3+='<div class="viz"><div class="viz-h"><span class="viz-t">Tests</span><span class="viz-s">référence : 16 tractions (fin sept.)</span></div>'+(trows.length?'<div class="tbl-wrap" style="margin-top:4px"><table class="tbl"><thead><tr><th>Sem.</th><th>Tractions</th><th>Pompes</th><th>Saut (cm)</th></tr></thead><tbody>'+trows.join("")+'</tbody></table></div>':'<div class="viz-empty">Tests prévus en S8, S11 et S21 : les résultats se notent dans l’onglet Plan.</div>')+'</div>';
+  c3+='</section>';
+  /* Carte 4 : la récupération */
+  var pmax=pain.length?Math.max.apply(null,pain.map(function(p){return p.y;})):0;
+  var c4='<section class="card stack" style="order:4"><h2 class="h2" style="margin:0">Récupération</h2>';
+  c4+=chart({title:"Douleur maximale",sub:"/10 · pire séance de la semaine",type:"line",unit:"/10",zero:true,ref:{v:3,label:"seuil 3/10"},ticks:pmax<=5?[0,1,2,3,4,5]:null,pts:pain,empty:"Note la douleur max dans « Après la séance » : la règle des 3/10 se lit ici."});
+  c4+=chart({title:"Sommeil",sub:"heures · moyenne des nuits notées",type:"line",unit:"h",pts:sleep,empty:"Note ton sommeil dans « Après la séance »."});
+  c4+='</section>';
+  return head+'<div class="pcol">'+c1+c3+'</div><div class="pcol">'+c2+c4+'</div>';
 }
 var tipEl=document.getElementById("tip"),tipOn=null;
 function showTip(hit,x,y){
@@ -1616,27 +1793,71 @@ document.addEventListener("click",function(e){
   if(b.dataset.act==="cues"){state.cues=!state.cues;lsSet(LS_CUES,state.cues);render();return;}
   if(b.id==="wkPrev"){goWeek(state.week-1);return;}
   if(b.id==="wkNext"){goWeek(state.week+1);return;}
-  if(b.id==="tPlus"){timer.end+=15000;timer.total+=15;tick();return;}
+  if(b.id==="tPlus"){addTime();return;}
+  if(b.id==="tSnd"){sndOn=!sndOn;lsSet(LS_SND,sndOn);sndUI();if(sndOn){audio();play(SND_MIN);}return;}
   if(b.id==="tStop"){stopTimer();return;}
 });
 
 /* ---------- Minuteur ---------- */
-var timer={end:0,total:0,iv:null,emom:false,lastMin:0},actx=null,wl=null;
-var tEl=document.getElementById("timer"),tTime=document.getElementById("tTime"),tLabel=document.getElementById("tLabel"),tFill=document.getElementById("tFill");
-function audio(){try{if(!actx){var AC=window.AudioContext||window.webkitAudioContext;if(AC) actx=new AC();}if(actx&&actx.state==="suspended") actx.resume();}catch(e){}}
-function beep(n,f){if(!actx) return;try{var t=actx.currentTime;for(var i=0;i<n;i++){var o=actx.createOscillator(),g=actx.createGain(),s=t+i*0.25;o.frequency.value=f||880;g.gain.setValueAtTime(0.0001,s);g.gain.exponentialRampToValueAtTime(0.3,s+0.02);g.gain.exponentialRampToValueAtTime(0.0001,s+0.18);o.connect(g);g.connect(actx.destination);o.start(s);o.stop(s+0.2);}}catch(e){}}
+/* Son : jeu de bips généré par le navigateur (rien à télécharger). Il retentit à la fin du repos, par un décompte
+   sur les 3 dernières secondes, et à chaque minute d'un EMOM. Le bouton cloche le coupe ; la vibration reste. */
+var LS_SND="carnet62.snd",sndOn=lsGet(LS_SND)!==false;
+var timer={end:0,total:0,iv:null,emom:false,lastMin:0,lastTick:0},actx=null,wl=null;
+var tEl=document.getElementById("timer"),tTime=document.getElementById("tTime"),tLabel=document.getElementById("tLabel"),tFill=document.getElementById("tFill"),tSnd=document.getElementById("tSnd");
+var SND_END=[[0,880,.18,.55],[.26,880,.18,.55],[.52,1320,.5,.55],[1.25,880,.18,.55],[1.51,880,.18,.55],[1.77,1320,.5,.55]];
+var SND_MIN=[[0,1100,.22,.45]],SND_TICK=[[0,740,.09,.32,"sine"]];
+function sndUI(){tSnd.setAttribute("aria-pressed",sndOn?"true":"false");tSnd.setAttribute("aria-label","Son du minuteur : "+(sndOn?"activé":"coupé"));}
+function audio(){try{if(!actx){var AC=window.AudioContext||window.webkitAudioContext;if(AC) actx=new AC();}if(actx&&actx.state!=="running") actx.resume();if(navigator.audioSession) navigator.audioSession.type="playback";}catch(e){}}
+function tone(t,f,d,v,type){var o=actx.createOscillator(),g=actx.createGain();o.type=type||"triangle";o.frequency.value=f;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+0.015);g.gain.setValueAtTime(v,Math.max(t+0.016,t+d-0.05));g.gain.exponentialRampToValueAtTime(0.0001,t+d);o.connect(g);g.connect(actx.destination);o.start(t);o.stop(t+d+0.03);}
+function play(seq){if(!sndOn||!actx) return;try{var t=actx.currentTime+0.03;seq.forEach(function(x){tone(t+x[0],x[1],x[2],x[3],x[4]);});}catch(e){}}
 function lock(){try{if(navigator.wakeLock&&!wl){navigator.wakeLock.request("screen").then(function(l){wl=l;l.addEventListener("release",function(){wl=null;});},function(){});}}catch(e){}}
 function unlock(){try{if(wl){wl.release();wl=null;}}catch(e){}}
-function startTimer(sec,label,emom){audio();lock();timer.end=Date.now()+sec*1000;timer.total=sec;timer.emom=emom;timer.lastMin=0;tLabel.textContent=label;tEl.hidden=false;tEl.classList.remove("end");clearInterval(timer.iv);timer.iv=setInterval(tick,250);tick();}
+function startTimer(sec,label,emom){audio();lock();timer.end=Date.now()+sec*1000;timer.total=sec;timer.emom=emom;timer.lastMin=0;timer.lastTick=0;tLabel.textContent=label;tEl.hidden=false;tEl.classList.remove("end");clearInterval(timer.iv);timer.iv=setInterval(tick,250);tick();}
+function addTime(){
+  /* +15 s : prolonge le repos en cours, ou le relance s'il vient de se terminer */
+  audio();lock();
+  if(timer.iv){timer.end+=15000;timer.total+=15;}
+  else{timer.end=Date.now()+15000;timer.total=15;timer.emom=false;timer.lastMin=0;}
+  timer.lastTick=0;tEl.classList.remove("end");
+  if(!timer.iv) timer.iv=setInterval(tick,250);
+  tick();
+}
 function tick(){
   var leftMs=timer.end-Date.now(),left=Math.max(0,Math.ceil(leftMs/1000));
   tTime.textContent=mmss(left);
   tFill.style.width=Math.min(100,100*(1-left/Math.max(1,timer.total)))+"%";
-  if(timer.emom){var el=Math.floor((timer.total-left)/60);if(el>timer.lastMin&&left>0){timer.lastMin=el;beep(1,1100);}}
-  if(leftMs<=0){clearInterval(timer.iv);timer.iv=null;tEl.classList.add("end");tTime.textContent=timer.emom?"Terminé":"C’est reparti";beep(3);try{if(navigator.vibrate) navigator.vibrate([150,80,150]);}catch(e){}unlock();}
+  if(leftMs>0){
+    if(timer.emom){var el=Math.floor((timer.total-left)/60);if(el>timer.lastMin){timer.lastMin=el;play(SND_MIN);}}
+    else if(timer.total>=10&&left<=3&&left!==timer.lastTick){timer.lastTick=left;play(SND_TICK);}
+    return;
+  }
+  clearInterval(timer.iv);timer.iv=null;tEl.classList.add("end");tTime.textContent=timer.emom?"Terminé":"C’est reparti";
+  audio();play(SND_END);
+  try{if(navigator.vibrate) navigator.vibrate([200,100,200,100,400]);}catch(e){}
+  unlock();
 }
-function stopTimer(){clearInterval(timer.iv);timer.iv=null;tEl.hidden=true;unlock();}
-document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&timer.iv){wl=null;lock();}});
+function stopTimer(){clearInterval(timer.iv);timer.iv=null;tEl.hidden=true;tEl.classList.remove("end");unlock();}
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&timer.iv){wl=null;lock();tick();}});
+sndUI();
+
+/* ---------- En-tête rétractable (téléphone et tablette tactile) ----------
+   On descend dans la page : la semaine et les onglets se rangent pour laisser la place. On remonte un peu : ils reviennent.
+   Sur ordinateur, ils restent dans la barre latérale. */
+(function(){
+  var hdr=document.getElementById("top"),mq=window.matchMedia("(max-width:1023px) and (pointer:coarse)"),lastY=window.pageYOffset||0,acc=0,hid=false;
+  function set(v){if(v===hid) return;hid=v;hdr.classList.toggle("hide",v);}
+  window.addEventListener("scroll",function(){
+    if(!mq.matches){acc=0;set(false);return;}
+    var max=Math.max(0,document.documentElement.scrollHeight-window.innerHeight),y=Math.min(max,Math.max(0,window.pageYOffset||0)),dy=y-lastY;lastY=y;
+    if(y<=hdr.offsetHeight){acc=0;set(false);return;}
+    if(dy===0) return;
+    if((dy>0)!==(acc>0)) acc=0;
+    acc+=dy;
+    if(acc>18) set(true);else if(acc<-8) set(false);
+  },{passive:true});
+  hdr.addEventListener("focusin",function(){set(false);});
+  if(mq.addEventListener) mq.addEventListener("change",function(){set(false);});
+})();
 
 document.addEventListener("visibilitychange",function(){
   if(!ghOn()) return;
