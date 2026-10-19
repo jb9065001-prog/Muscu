@@ -454,7 +454,7 @@ details.tv .tbl-wrap{margin-top:6px}
 "use strict";
 
 /* ---------- Calendrier (numérotation de la V6.2 : S3 = lundi 19 octobre 2026) ---------- */
-var BUILD=11, BUILD_DATE="19 oct. 2026";
+var BUILD=12, BUILD_DATE="19 oct. 2026";
 var FIRST=3, LAST=21, HFIRST=-36; /* HFIRST : semaine du 19 janv. 2026 ; les semaines avant S3 = ton historique, visible dans les graphiques */
 var MONTHS=["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
 function dOf(n,off){return new Date(2026,9,19+(n-3)*7+(off||0));}
@@ -471,11 +471,11 @@ var PH={
   b1:{chip:"Bloc 1",short:"Bloc 1",name:"Bloc 1",rir:"RIR 1-2",fin:10,cardio:40,acc:true,
     txt:"Règle de la 1re série : dès qu’elle atteint le haut de la fourchette avec au moins 1 rep en réserve, tu montes à la séance suivante. Isolation à RIR 0-1."},
   b1end:{chip:"Fin de bloc",short:"Fin B1",name:"Fin du bloc 1",rir:"RIR 1-2",fin:10,cardio:40,acc:true,
-    txt:"Dernière semaine du bloc : RIR 1 sur les exercices principaux (tractions, dips, fentes, step-ups). Le reste comme d’habitude."},
+    txt:"Dernière semaine du bloc : RIR 1 sur les exercices principaux (tractions, développé au sol, fentes, step-ups). Le reste comme d’habitude."},
   exam:{chip:"Examens",short:"Exam.",name:"Examens : semaine allégée",rir:"RIR 3",sets:2,light:true,fin:0,cardio:30,acc:false,
     txt:"2 séries par exercice à RIR 3, sauts et Nordic en version légère, pas de finisher. Tu entretiens sans te fatiguer."},
   b2:{chip:"Bloc 2",short:"Bloc 2",name:"Bloc 2 : plus lourd",rir:"RIR 1-2",fin:12,cardio:45,acc:true,
-    txt:"Tractions et dips en 4 × 3-5 avec +2,5 kg, fentes bulgares en 4 × 5-8, EMOM à 11 min. Le finisher passe à 12 min."},
+    txt:"Tractions en 4 × 3-5 avec +2,5 kg, développé au sol en 4 × 5-8, fentes bulgares en 4 × 5-8, EMOM à 11 min. Le finisher passe à 12 min."},
   taper:{chip:"Affûtage",short:"Affût.",name:"Affûtage + tests",rir:"RIR 2",sets:2,light:true,noD:true,fin:0,cardio:30,acc:false,
     txt:"A, B et C à 2 séries, EMOM 6 min, pas de chin-ups ni de séance D. Tests le vendredi 18 décembre, reposé."},
   vac:{chip:"Vacances",short:"Vac.",name:"Vacances en France",rir:"RIR 2",fin:10,cardio:60,acc:false,vtt:true,
@@ -503,20 +503,20 @@ var LAT={sets:3,lo:8,hi:15,iso:1,lat:1,rest:45,restTxt:"45 s",tempo:"monte en 1 
 function cp(o,x){var r={};for(var k in o) r[k]=o[k];for(var k2 in x) r[k2]=x[k2];return r;}
 
 var S={
- A:{code:"A",title:"Haut du corps · force",sub:"Puissance, tractions lourdes, dips, épaules",day:"Lundi",dur:"≈ 70-85 min",tab:"Lun · Haut",warm:"haut",fin:"A8",ex:[
+ A:{code:"A",title:"Haut du corps · force",sub:"Puissance, tractions lourdes, développé au sol, épaules",day:"Lundi",dur:"≈ 70-85 min",tab:"Lun · Haut",warm:"haut",fin:"A8",ex:[
   {id:"A1",name:"Pompes explosives",sets:4,lo:5,hi:5,speed:1,noLoad:1,rest:90,restTxt:"90 s",tempo:"explosif",start:"poids du corps",up:"claque des mains quand c’est facile",q:"pompes explosives technique",
    cues:["Position de pompe, corps gainé, mains largeur d’épaules.","Descends contrôlé, puis pousse le plus fort possible : les mains décollent du sol.","Réception coudes souples, et enchaîne.","Arrête la série si la hauteur baisse."],
    alts:[{k:"table",tag:"Poignets / épaule",name:"Pompes explosives mains sur une table",cues:["Mains sur une table stable calée contre un mur, corps incliné.","Même principe : pousse fort, les mains décollent, réception souple."]}]},
-  {id:"A2",name:"Tractions lestées, pronation",sets:4,lo:4,hi:6,main:1,ss:"A3",rest:120,restTxt:"2 min après chaque exercice",tempo:"descente 2 s, pause 1 s en bas",start:"+15 kg",ph:"+15 kg",up:"+1 à 2,5 kg",q:"traction lestée pronation technique",
+  {id:"A2",name:"Tractions lestées, pronation",sets:4,lo:4,hi:6,main:1,ss:"A3p",rest:120,restTxt:"2 min après chaque exercice",tempo:"descente 2 s, pause 1 s en bas",start:"+15 kg",ph:"+15 kg",up:"+1 à 2,5 kg",q:"traction lestée pronation technique",
    by:function(k){if(k==="b2") return {lo:3,hi:5};},
    cues:["Mains un peu plus écartées que les épaules, paumes vers l’avant, les deux mains à la même hauteur.","Départ bras tendus, épaules basses, pause 1 s.","Monte jusqu’à passer le menton, redescends en 2 s.","Zéro balancier : la barre et la ceinture n’aiment pas ça."],
    alts:[{k:"light",tag:"Épaule",name:"Tractions lestées allégées",start:"ta charge −5 kg",tempo:"descente 3 s",cues:["Même mouvement avec 5 kg de moins et une descente en 3 s."]},
          {k:"row",tag:"Épaule",name:"Rowing inversé aux sangles, lesté",rx:{sets:4,lo:8,hi:12},start:"gilet, pieds sur une chaise",cues:["Sangles à hauteur de taille, talons sur une chaise, corps gainé.","Tire les poignées vers le bas des côtes, pause 1 s, descente en 2 s."]}]},
-  {id:"A3",name:"Dips lestés",sets:4,lo:5,hi:8,main:1,ss:"A2",rest:120,restTxt:"2 min après chaque exercice",tempo:"descente 2 s",start:"+12,5 kg sur station, +10 kg max entre chaises",ph:"+12,5 kg",up:"+2,5 kg",q:"dips lestés technique",
-   by:function(k){if(k==="b2") return {lo:3,hi:5};},
-   cues:["Sur la station de dips, ou entre deux chaises solides calées contre un mur.","Buste un peu penché en avant, coudes qui partent vers l’arrière.","Descends jusqu’à 90° au coude, pas plus bas, puis pousse jusqu’aux bras tendus.","Entre deux chaises, ne dépasse pas +10 kg."],
-   alts:[{k:"push",tag:"Épaule / matériel",name:"Pompes lestées pieds surélevés",rx:{sets:4,lo:6,hi:10},start:"+10 kg (gilet)",cues:["Pieds sur une chaise, corps gainé, coudes à 45°.","Descends en 2 s jusqu’à frôler le sol, puis pousse."]},
-         {k:"floor",tag:"Épaule",name:"Développé au sol aux haltères",rx:{sets:4,lo:6,hi:10},start:"2 × 20 kg",cues:["Allongé, genoux pliés. Descends jusqu’à poser l’arrière des bras au sol, coudes à 45°.","Pause 1 s, puis pousse."]}]},
+  {id:"A3p",label:"A3",name:"Développé au sol aux haltères",sets:4,lo:6,hi:10,main:1,ss:"A2",rest:120,restTxt:"2 min après chaque exercice",tempo:"descente 2 s, pause 1 s bras au sol",start:"2 × 18-20 kg",ph:"2 × 20 kg",up:"+1 à 2 kg par haltère",q:"dumbbell floor press technique",
+   by:function(k){if(k==="b2") return {lo:5,hi:8};},
+   cues:["Allongé au sol, genoux pliés, pieds à plat. Pour te mettre en place : assis, haltères posés debout sur les cuisses, puis roule en arrière en les gardant contre la poitrine.","Coudes à environ 45° du buste, paumes face à face ou légèrement tournées vers les pieds.","Descends en 2 s jusqu’à poser l’arrière des bras au sol, pause 1 s sans rebondir, puis pousse jusqu’aux bras tendus.","Le sol limite l’amplitude : l’épaule ne part pas en arrière comme aux dips."],
+   alts:[{k:"dpush",tag:"Matériel",name:"Pompes lestées mains sur haltères",rx:{sets:4,lo:6,hi:10},start:"+10 kg (gilet)",noLoad:0,cues:["Mains sur deux haltères posés au sol (prise neutre), gilet et éventuellement un disque dans un sac à dos.","Descends en 2 s plus bas que les mains, coudes à 45°, puis pousse.","À utiliser quand tes haltères deviennent trop légers pour le développé au sol."]},
+         {k:"strap",tag:"Épaule",name:"Pompes aux sangles",rx:{sets:4,lo:6,hi:12},start:"pieds au sol, sangles basses",cues:["Sangles à 10-20 cm du sol, corps gainé, coudes à 45°.","Descends jusqu’aux mains au niveau de la poitrine, sans aller plus bas si l’épaule tire.","Plus les pieds sont reculés, plus c’est dur ; ajoute le gilet ensuite."]}]},
   {id:"A4",name:"Rowing haltère à un bras",sets:3,lo:8,hi:12,side:"bras",ss:"A6",rest:60,restTxt:"60 s après chaque exercice",tempo:"pause 1 s en haut",start:"18 kg",ph:"18 kg",up:"+2 kg",q:"rowing haltère un bras technique",
    cues:["Main libre et genou sur une chaise, dos plat.","Tire l’haltère vers la hanche, coude près du corps.","Pause 1 s en haut, omoplate serrée, puis redescends bras tendu."],
    alts:[{k:"strap",tag:"Matériel",name:"Rowing aux sangles",rx:{sets:3,lo:10,hi:15},start:"poids du corps, pieds surélevés",cues:["Corps gainé, tire les poignées vers les côtes, pause 1 s."]}]},
@@ -613,7 +613,16 @@ var S={
 };
 var ORDER=["A","B","E","C","D"];
 var TABS=["plan","A","B","E","C","D","progres","regles"];
-var ALLEX={};ORDER.forEach(function(s){S[s].ex.forEach(function(e){ALLEX[e.id]=e;});});
+/* Exercices retirés du programme : gardés pour l’historique, les graphiques et l’export */
+var RETIRED=[
+  {id:"A3",name:"Dips lestés",sets:4,lo:5,hi:8,main:1,retired:"A",rest:120,restTxt:"2 min après chaque exercice",tempo:"descente 2 s",start:"+12,5 kg sur station, +10 kg max entre chaises",ph:"+12,5 kg",up:"+2,5 kg",q:"dips lestés technique",
+   by:function(k){if(k==="b2") return {lo:3,hi:5};},
+   cues:["Sur la station de dips, ou entre deux chaises solides calées contre un mur.","Buste un peu penché en avant, coudes qui partent vers l’arrière.","Descends jusqu’à 90° au coude, pas plus bas, puis pousse jusqu’aux bras tendus.","Entre deux chaises, ne dépasse pas +10 kg."],
+   alts:[{k:"push",tag:"Épaule / matériel",name:"Pompes lestées pieds surélevés",rx:{sets:4,lo:6,hi:10},start:"+10 kg (gilet)",cues:["Pieds sur une chaise, corps gainé, coudes à 45°.","Descends en 2 s jusqu’à frôler le sol, puis pousse."]},
+         {k:"floor",tag:"Épaule",name:"Développé au sol aux haltères",rx:{sets:4,lo:6,hi:10},start:"2 × 20 kg",cues:["Allongé, genoux pliés. Descends jusqu’à poser l’arrière des bras au sol, coudes à 45°.","Pause 1 s, puis pousse."]}]}
+];
+var ALLEX={};ORDER.forEach(function(s){S[s].ex.forEach(function(e){ALLEX[e.id]=e;});});RETIRED.forEach(function(e){ALLEX[e.id]=e;});
+function exAll(sid){return S[sid].ex.concat(RETIRED.filter(function(e){return e.retired===sid;}));}
 
 /* ---------- Historique : ton carnet d'avant le 19 octobre (S0 = sem. du 28 sept., S1, S2) ----------
    Chaque exercice est rattaché à son équivalent V6.2, quel que soit le jour où tu le faisais. */
@@ -743,6 +752,9 @@ var MUSC={
  A2:{p:["lats"],s:["biceps","rhomb","forearm","delt_p"]},
  "A2:row":{p:["lats","rhomb","delt_p"],s:["biceps","forearm"]},
  A3:{p:["pecs","triceps"],s:["delt_a"]},
+ A3p:{p:["pecs","triceps"],s:["delt_a"]},
+ "A3p:dpush":{p:["pecs","triceps","delt_a"],s:["abs"]},
+ "A3p:strap":{p:["pecs","triceps","delt_a"],s:["abs","delt_s"]},
  "A3:push":{p:["pecs","delt_a","triceps"],s:["abs"]},
  A4:{p:["lats","rhomb"],s:["biceps","delt_p","forearm"]},
  A5:{p:["delt_a","delt_s"],s:["triceps","traps"]},
@@ -961,7 +973,7 @@ function exportCSV(){
   for(var n=HFIRST;n<=LAST;n++){
     var o=state.weeks[n];if(!o) continue;
     ORDER.forEach(function(sid){
-      var list=S[sid].ex.slice();if(S[sid].fin) list.push({id:S[sid].fin,name:"Finisher cardio"});if(sid==="E") list=[{id:"E1",name:"Endurance"}];
+      var list=exAll(sid);if(S[sid].fin) list.push({id:S[sid].fin,name:"Finisher cardio"});if(sid==="E") list=[{id:"E1",name:"Endurance"}];
       list.forEach(function(ex){
         var e=o.ex&&o.ex[ex.id];if(!e||!hasData(e)) return;
         var alt=null;(ex.alts||[]).forEach(function(a){if(a.k===e.v) alt=a;});
@@ -1343,7 +1355,7 @@ function exCard(ex,n){
   return h+'</article>';
 }
 
-var FIN={base:{name:"Finisher cardio",rows:[["Minutes impaires","10 burpees avec saut"],["Minutes paires","20 mountain climbers (10 par jambe)"]],cues:["Au début de chaque minute, fais les reps, puis récupère jusqu’à la minute suivante. Le chrono bipe à chaque minute.","Il doit te rester 15 à 20 s de repos par minute. Sinon, retire 2 reps.","Burpee : mains au sol, pieds en arrière, pompe, pieds ramenés, saut bras en l’air."]},
+var FIN={base:{name:"Finisher cardio",rows:[["Minutes impaires","8 burpees avec saut"],["Minutes paires","40 mountain climbers rapides (20 par jambe)"]],cues:["Au début de chaque minute, fais les reps, puis récupère jusqu’à la minute suivante. Le chrono bipe à chaque minute.","Il doit te rester 15 à 20 s de repos par minute. Burpees : passe à 9 puis 10 quand il te reste encore 20 s sur toutes les minutes. Mountain climbers : s’il te reste plus de 25 s, passe à 50.","Burpee : mains au sol, pieds en arrière, pompe, pieds ramenés, saut bras en l’air."]},
   alt:{k:"soft",tag:"Genou, sans impact",name:"Finisher sans impact",rows:[["Minutes impaires","15 swings à l’haltère (16-20 kg)"],["Minutes paires","8 burpees sans saut"]],cues:["Même format EMOM.","Swing : mouvement de hanche, les bras ne tirent pas. Burpee : pas de saut à la fin."]}};
 function finCard(id,n){
   var p=phase(n), min=p.fin;
@@ -1473,7 +1485,7 @@ function renderRules(){
   '<section class="card prose"><h2 class="h2">Lire une prescription</h2><ul>'+
   '<li><b>4 × 4-6</b> : 4 séries, entre 4 et 6 répétitions.</li>'+
   '<li><b>RIR 2</b> : tu t’arrêtes quand il te reste 2 reps propres en réserve.</li>'+
-  '<li><b>Force</b> (tractions, dips, fentes, step-ups…) : RIR 1-2, jamais l’échec. <b>Isolation</b> (latérales, curl, triceps, mollets, leg curl) : RIR 0-1. <b>Sauts et swings</b> : vitesse maximale, tu arrêtes quand ça ralentit.</li>'+
+  '<li><b>Force</b> (tractions, développé au sol, fentes, step-ups…) : RIR 1-2, jamais l’échec. <b>Isolation</b> (latérales, curl, triceps, mollets, leg curl) : RIR 0-1. <b>Sauts et swings</b> : vitesse maximale, tu arrêtes quand ça ralentit.</li>'+
   '<li><b>Superset</b> : tu alternes deux exercices, avec le repos indiqué après chacun.</li>'+
   '<li><b>Repos</b> : bouton « Repos » sur chaque exercice ; le minuteur s’affiche en bas et bipe.</li></ul></section>'+
   '<section class="card prose"><h2 class="h2">Progresser : la règle de la 1re série</h2><ol>'+
@@ -1500,7 +1512,7 @@ function renderRules(){
   '<li>Tour de taille qui prend plus de 1 cm par mois : réduis un peu l’apport.</li></ul></section>'+
   '<section class="card prose"><h2 class="h2">Matériel prévu par la V6.2</h2><ul>'+
   '<li>Ceinture de lest à chaîne (tractions, chin-ups, dips), barres à dips stables, 2 disques de 5 kg.</li>'+
-  '<li>En attendant : gilet de 10 kg, dips entre deux chaises calées à +10 kg maximum, ou la version « Pompes lestées » des dips.</li></ul></section>';
+  '<li>En attendant : gilet de 10 kg. Les dips lestés sont remplacés par le développé au sol aux haltères (A3) : il se charge facilement à la maison et ménage l’avant de l’épaule. Tes anciennes séances de dips restent visibles dans Progrès.</li></ul></section>';
   var parts=all.split("</section>").filter(function(x){return x;}).map(function(p,i){return p.replace('<section class="card prose">','<section class="card prose" style="order:'+(i+1)+'">')+"</section>";});
   function col(ix){return '<div class="pcol">'+ix.map(function(i){return parts[i];}).join("")+'</div>';}
   return col([0,2,4,6])+col([1,3,5,7]);
@@ -1594,6 +1606,12 @@ function progOptions(){
     });
     opts.push(g);
   });
+  var old={label:"Anciens exercices",items:[]};
+  RETIRED.forEach(function(ex){
+    var used=false;for(var n=HFIRST;n<=LAST;n++){var e=entry(n,ex.id);if(!(e.v)&&hasData(e)){used=true;break;}}
+    if(used) old.items.push({key:ex.id+"|",label:(ex.label||ex.id)+" · "+ex.name+" (retiré)",ex:ex,alt:null});
+  });
+  if(old.items.length) opts.push(old);
   return opts;
 }
 function exSeries(ex,alt){
@@ -1625,7 +1643,7 @@ function heatmap(){
 }
 function muscleBars(n){
   var tot={},any=false;
-  ORDER.forEach(function(sid){S[sid].ex.forEach(function(ex){
+  ORDER.forEach(function(sid){exAll(sid).forEach(function(ex){
     var en=entry(n,ex.id),k=setVals(en).filter(function(v){return v>0;}).length;if(!k) return;
     var m=muscOf(ex.id,en.v||"");if(!m) return;
     m.p.forEach(function(g){tot[g]=(tot[g]||0)+k;});m.s.forEach(function(g){tot[g]=(tot[g]||0)+k*0.5;});any=true;
@@ -1637,7 +1655,7 @@ function muscleBars(n){
 }
 function weekVolume(n){
   var tv=0;
-  ORDER.forEach(function(sid){S[sid].ex.forEach(function(ex){
+  ORDER.forEach(function(sid){exAll(sid).forEach(function(ex){
     var en=entry(n,ex.id);if(!en||!en.sets) return;
     var alt=null;(ex.alts||[]).forEach(function(a){if(a.k===(en.v||"")) alt=a;});
     if(((alt&&alt.rx&&alt.rx.unit)||ex.unit)==="s") return;
