@@ -454,7 +454,7 @@ details.tv .tbl-wrap{margin-top:6px}
 "use strict";
 
 /* ---------- Calendrier (numérotation de la V6.2 : S3 = lundi 19 octobre 2026) ---------- */
-var BUILD=10, BUILD_DATE="19 oct. 2026";
+var BUILD=11, BUILD_DATE="19 oct. 2026";
 var FIRST=3, LAST=21, HFIRST=-36; /* HFIRST : semaine du 19 janv. 2026 ; les semaines avant S3 = ton historique, visible dans les graphiques */
 var MONTHS=["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
 function dOf(n,off){return new Date(2026,9,19+(n-3)*7+(off||0));}
@@ -517,14 +517,14 @@ var S={
    cues:["Sur la station de dips, ou entre deux chaises solides calées contre un mur.","Buste un peu penché en avant, coudes qui partent vers l’arrière.","Descends jusqu’à 90° au coude, pas plus bas, puis pousse jusqu’aux bras tendus.","Entre deux chaises, ne dépasse pas +10 kg."],
    alts:[{k:"push",tag:"Épaule / matériel",name:"Pompes lestées pieds surélevés",rx:{sets:4,lo:6,hi:10},start:"+10 kg (gilet)",cues:["Pieds sur une chaise, corps gainé, coudes à 45°.","Descends en 2 s jusqu’à frôler le sol, puis pousse."]},
          {k:"floor",tag:"Épaule",name:"Développé au sol aux haltères",rx:{sets:4,lo:6,hi:10},start:"2 × 20 kg",cues:["Allongé, genoux pliés. Descends jusqu’à poser l’arrière des bras au sol, coudes à 45°.","Pause 1 s, puis pousse."]}]},
-  {id:"A4",name:"Rowing haltère à un bras",sets:3,lo:8,hi:12,side:"bras",ss:"A5",rest:60,restTxt:"60 s après chaque exercice",tempo:"pause 1 s en haut",start:"18 kg",ph:"18 kg",up:"+2 kg",q:"rowing haltère un bras technique",
+  {id:"A4",name:"Rowing haltère à un bras",sets:3,lo:8,hi:12,side:"bras",ss:"A6",rest:60,restTxt:"60 s après chaque exercice",tempo:"pause 1 s en haut",start:"18 kg",ph:"18 kg",up:"+2 kg",q:"rowing haltère un bras technique",
    cues:["Main libre et genou sur une chaise, dos plat.","Tire l’haltère vers la hanche, coude près du corps.","Pause 1 s en haut, omoplate serrée, puis redescends bras tendu."],
    alts:[{k:"strap",tag:"Matériel",name:"Rowing aux sangles",rx:{sets:3,lo:10,hi:15},start:"poids du corps, pieds surélevés",cues:["Corps gainé, tire les poignées vers les côtes, pause 1 s."]}]},
-  {id:"A5",name:"Développé militaire haltères, assis",sets:3,lo:8,hi:12,ss:"A4",rest:60,restTxt:"60 s après chaque exercice",tempo:"descente 2 s",start:"2 × 10 kg",ph:"2 × 10 kg",up:"+1 à 2 kg par haltère",q:"développé militaire haltères assis technique",
+  cp(LAT,{id:"A6",name:"Élévations latérales",ss:"A4",restTxt:"45 s après chaque exercice"}),
+  {id:"A5",name:"Développé militaire haltères, assis",sets:3,lo:8,hi:12,ss:"A7",rest:60,restTxt:"60 s après chaque exercice",tempo:"descente 2 s",start:"2 × 10 kg",ph:"2 × 10 kg",up:"+1 à 2 kg par haltère",q:"développé militaire haltères assis technique",
    cues:["Assis sur une chaise, dos calé contre le dossier.","Haltères à hauteur d’oreilles, pousse au-dessus de la tête jusqu’aux bras tendus.","Pas de cambrure : abdos et fesses serrés."],
    alts:[{k:"pike",tag:"Épaule / matériel",name:"Pike push-ups pieds surélevés",start:"poids du corps",cues:["Pieds sur une chaise, bassin haut, corps en V à l’envers.","Descends la tête entre les mains, puis pousse."]}]},
-  cp(LAT,{id:"A6",name:"Élévations latérales",ss:"A7"}),
-  {id:"A7",name:"Roue abdominale",sets:3,lo:8,hi:12,ss:"A6",rest:45,restTxt:"45 s après chaque exercice",tempo:"aller en 3 s",start:"à genoux, +5 kg (gilet)",ph:"+5 kg",up:"+2,5 kg ; à +10 kg, passe debout face à un mur",q:"roue abdominale à genoux technique",
+  {id:"A7",name:"Roue abdominale",sets:3,lo:8,hi:12,ss:"A5",rest:45,restTxt:"45 s après chaque exercice",tempo:"aller en 3 s",start:"à genoux, +5 kg (gilet)",ph:"+5 kg",up:"+2,5 kg ; à +10 kg, passe debout face à un mur",q:"roue abdominale à genoux technique",
    cues:["À genoux, bras tendus, bassin rentré (fesses serrées).","Roule vers l’avant en 3 s sans jamais creuser le bas du dos.","Reviens en tirant avec les abdos."],
    alts:[{k:"plank",tag:"Dos",name:"Planche de face",rx:{sets:3,lo:30,hi:45,unit:"s"},start:"30 s",cues:["Avant-bras au sol, corps aligné, fesses serrées. Tiens."]}]}
  ]},
