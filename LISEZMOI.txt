@@ -1,0 +1,28 @@
+CARNET V6.2 — installer l'app sur ton téléphone
+
+Tes données restent uniquement sur ton téléphone (stockage du navigateur).
+Rien n'est envoyé à Claude ni ailleurs. Pense à exporter une sauvegarde
+de temps en temps (onglet Plan > Tes données).
+
+Mettre l'app en ligne gratuitement avec GitHub Pages (10 min, une seule fois) :
+1. Crée un compte gratuit sur https://github.com
+2. Clique sur « New repository », nomme-le « carnet », laisse-le Public,
+   puis « Create repository ».
+3. Clique sur « uploading an existing file » et dépose les 7 fichiers de ce dossier
+   (index.html, sw.js, manifest.webmanifest et les 4 images .png).
+   Valide avec « Commit changes ».
+4. Va dans Settings > Pages. Dans « Branch », choisis « main » et « / (root) »,
+   puis « Save ».
+5. Attends 1 à 2 minutes : l'adresse s'affiche en haut de la page
+   (du type https://tonpseudo.github.io/carnet/).
+
+Sur le téléphone :
+- iPhone : ouvre l'adresse dans Safari > bouton Partager > « Sur l'écran d'accueil ».
+- Android : ouvre l'adresse dans Chrome > menu ⋮ > « Ajouter à l'écran d'accueil »
+  (ou « Installer l'application »).
+
+L'app marche ensuite hors connexion. Le code est public sur GitHub,
+mais tes séances ne quittent jamais ton téléphone.
+
+Mettre à jour l'app plus tard : remplace index.html sur GitHub par la nouvelle
+version. Tes données ne sont pas touchées.
