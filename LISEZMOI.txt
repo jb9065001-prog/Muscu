@@ -26,3 +26,12 @@ mais tes séances ne quittent jamais ton téléphone.
 
 Mettre à jour l'app plus tard : remplace index.html sur GitHub par la nouvelle
 version. Tes données ne sont pas touchées.
+
+NOUVEAUTÉS (build 13)
+- Menu ☰ à gauche : semaine, plan, séances (avec coches), progrès, règles.
+- Icônes par exercice et couleur par type de séance (haut, bas, cardio).
+- Fiches plus légères : technique, échauffement et note se déplient à la demande.
+- Thème Auto / Clair / Sombre (menu ☰, en bas).
+- Minuteur automatique : le repos démarre quand tu notes une série (réglable).
+- Douleur par zone : choisis la zone après la séance, l'app te prévient au-dessus de 3/10.
+- Badge Record sur les exercices, page Records et ratio poussée / tirage dans Progrès.
