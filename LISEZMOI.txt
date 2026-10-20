@@ -37,7 +37,7 @@ NOUVEAUTÉS (build 13)
 - Douleur par zone : choisis la zone après la séance, l'app te prévient au-dessus de 3/10.
 - Badge Record sur les exercices, page Records et ratio poussée / tirage dans Progrès.
 
-NOUVEAUTÉS (V6.3, build 14)
+NOUVEAUTÉS (V6.3, build 15)
 - Calendrier sans fin : après S21, cycles de 5 semaines normales + 1 semaine légère.
   Le programme prévu jusqu'à S21 ne change pas.
 - Coach adaptatif : champ « RIR atteint », tendance sur les 3 dernières séances,
@@ -49,6 +49,8 @@ NOUVEAUTÉS (V6.3, build 14)
 - Statistiques corrigées : « 2 × 20 kg » = 40 kg de charge externe, exercices
   unilatéraux comptés des deux côtés, 1RM estimé avec poids du corps seulement si
   tu l'as noté. Graphiques lisibles sur le long terme (fenêtre de 36 semaines).
+- Séance B : le Nordic curl est remplacé par le leg curl aux sangles (3 × 8-12, retour
+  en 3 s), avec nouvelle icône et consignes. La variante « glissé à la serviette » reste possible.
 - Code séparé en index.html / app.js / styles.css.
 - Sécurité : le jeton GitHub de synchronisation n'est plus gardé durablement ;
   il reste en mémoire de session. À chaque nouvelle ouverture du navigateur,

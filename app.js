@@ -2,7 +2,7 @@
 "use strict";
 
 /* ---------- Calendrier (numérotation de la V6.2 : S3 = lundi 19 octobre 2026) ---------- */
-var BUILD=14, BUILD_DATE="19 oct. 2026";
+var BUILD=15, BUILD_DATE="20 oct. 2026";
 var FIRST=3, LAST=21, HFIRST=-36; /* HFIRST : semaine du 19 janv. 2026 ; les semaines avant S3 = ton historique, visible dans les graphiques */
 var MONTHS=["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
 function dOf(n,off){return new Date(2026,9,19+(n-3)*7+(off||0));}
@@ -21,7 +21,7 @@ var PH={
   b1end:{chip:"Fin de bloc",short:"Fin B1",name:"Fin du bloc 1",rir:"RIR 1-2",fin:10,cardio:40,acc:true,
     txt:"Dernière semaine du bloc : RIR 1 sur les exercices principaux (tractions, développé au sol, fentes, step-ups). Le reste comme d’habitude."},
   exam:{chip:"Examens",short:"Exam.",name:"Examens : semaine allégée",rir:"RIR 3",sets:2,light:true,fin:0,cardio:30,acc:false,
-    txt:"2 séries par exercice à RIR 3, sauts et Nordic en version légère, pas de finisher. Tu entretiens sans te fatiguer."},
+    txt:"2 séries par exercice à RIR 3, sauts et leg curl en version légère, pas de finisher. Tu entretiens sans te fatiguer."},
   b2:{chip:"Bloc 2",short:"Bloc 2",name:"Bloc 2 : plus lourd",rir:"RIR 1-2",fin:12,cardio:45,acc:true,
     txt:"Tractions en 4 × 3-5 avec +2,5 kg, développé au sol en 4 × 5-8, fentes bulgares en 4 × 5-8, EMOM à 11 min. Le finisher passe à 12 min."},
   taper:{chip:"Affûtage",short:"Affût.",name:"Affûtage + tests",rir:"RIR 2",sets:2,light:true,noD:true,fin:0,cardio:30,acc:false,
@@ -97,11 +97,9 @@ var S={
    cues:["Haltère dans la main opposée à la jambe d’appui, main libre en appui léger sur un mur si besoin.","Genou d’appui un peu fléchi, la hanche recule, la jambe libre part en arrière.","Dos plat, descends en 3 s jusqu’à l’étirement derrière la cuisse.","Remonte en poussant la hanche vers l’avant, bassin bien de face."],
    alts:[{k:"bil",tag:"Équilibre",name:"Soulevé de terre roumain, deux jambes",start:"2 × 20 kg",cues:["Haltères devant les cuisses, fesses en arrière, dos plat, descente en 3 s."]},
          {k:"bridge",tag:"Dos",name:"Pont fessier lesté",rx:{sets:3,lo:10,hi:15},start:"20 kg",cues:["Allongé, haltère sur les hanches, monte les hanches et serre 2 s."]}]},
-  {id:"B5",name:"Nordic curl",kind:"fixed",noLoad:1,ss:"B5b",rest:60,restTxt:"60 s après chaque exercice",tempo:"descente 4 s",start:"2 × 3",q:"nordic curl débutant assisté",
-   by:function(k,n){if(n===3) return {sets:2,lo:3,hi:3};if(n===4) return {sets:2,lo:3,hi:4};if(n===5||n===6) return {sets:2,lo:4,hi:5};if(n===7) return {sets:3,lo:4,hi:4};
-     if(k==="exam") return {sets:2,lo:2,hi:3,tag:"léger"};if(k==="taper") return {sets:2,lo:3,hi:3};if(k==="vac") return {sets:2,lo:4,hi:5};if(k==="reprise") return {sets:2,lo:3,hi:4};if(k==="test") return {sets:2,lo:4,hi:4};return {sets:3,lo:4,hi:6};},
-   cues:["À genoux sur un coussin, talons bloqués sous le canapé.","Corps droit des genoux aux épaules, fesses serrées.","Descends le plus lentement possible (4 s), rattrape-toi avec les mains en bas.","Remonte en t’aidant des mains : c’est la descente qui compte."],
-   alts:[{k:"curl",tag:"Ischios",name:"Leg curl aux sangles",kind:"std",rx:{sets:3,lo:8,hi:12},start:"poids du corps",cues:["Talons dans les sangles, pont fessier, ramène les talons vers les fesses, retour en 3 s."]}]},
+  {id:"B5",name:"Leg curl aux sangles",sets:3,lo:8,hi:12,iso:1,noLoad:1,ss:"B5b",rest:60,restTxt:"60 s après chaque exercice",tempo:"retour en 3 s",start:"poids du corps",ph:"poids du corps",up:"+1 rep ; à 12 reps sur toutes les séries, passe à une jambe (3 × 6-8)",q:"leg curl ischios sangles TRX technique",
+   cues:["Allongé sur le dos, talons dans les sangles, bras le long du corps.","Monte le bassin en pont fessier et garde-le haut pendant toute la série.","Ramène les talons vers les fesses en contractant les ischios.","Reviens en 3 s, sans laisser le bassin retomber."],
+   alts:[{k:"slide",tag:"Matériel",name:"Leg curl glissé (serviette au sol)",cues:["Allongé, talons sur une serviette sur sol lisse, bassin haut.","Glisse les talons vers les fesses, puis retour lent en 3 s."]}]},
   {id:"B5b",label:"B5 bis",name:"Planche Copenhague",sets:3,lo:15,hi:30,unit:"s",side:"côté",noLoad:1,ss:"B5",rest:60,restTxt:"60 s après chaque exercice",tempo:"tenue",start:"15 s, genou sur la chaise",up:"+5 s ; à 30 s, passe le pied sur la chaise et reviens à 15 s",q:"copenhagen plank technique",
    cues:["Allongé sur le côté, avant-bras au sol. Genou du dessus posé sur une chaise stable et calée.","Monte le bassin pour aligner épaules, hanches et genou.","Tiens sans laisser tomber les hanches."],
    alts:[{k:"side",tag:"Adducteurs",name:"Planche latérale",rx:{sets:3,lo:30,hi:45,unit:"s"},cues:["Coude sous l’épaule, corps aligné, hanches hautes."]}]},
@@ -921,6 +919,7 @@ legs:'<circle cx="12" cy="4.6" r="1.9"/><path d="M12 7.4v5M7.6 9.6h8.8M12 12.4l-
 core:'<rect x="7" y="3.5" width="10" height="17" rx="4.5"/><path d="M12 3.5v17M7 9h10M7 14.5h10"/>',
 jump:'<path d="M12 18.5V5.5M6.8 10.5 12 5.3l5.2 5.2M5.5 21h13"/>',
 stairs:'<path d="M3.5 19.5h5v-5h5v-5h5v-5h2"/>',
+curl:'<path d="M2.5 20.5h19"/><circle cx="4.2" cy="15.6" r="1.7"/><path d="M6.2 18l5.6-3.8 3.4 3.6M15.2 17.8l-.9-6.3M14.3 11.5v-7.5M12.6 4h3.4"/>',
 flame:'<path d="M12 21c-3.6 0-6-2.5-6-5.8 0-2.4 1.3-4 2.6-5.4C9.8 8.5 10.6 7 10.4 4c2.8 1.4 4.2 3.8 4.3 6 .9-.7 1.4-1.8 1.5-3 1.1 1.7 1.8 3.6 1.8 5.4C18 18.3 15.6 21 12 21z"/>',
 foot:'<path d="M9.2 10.4c3.4-.9 6.6 1.2 6.6 5.2 0 3.3-1.5 5.9-4.6 5.9-2.9 0-4.6-2.2-4.6-5.3 0-2.6.8-4.8 2.6-5.8z"/><circle cx="15.9" cy="6.9" r="1.45"/><circle cx="12.4" cy="5.2" r="1.15"/><circle cx="9.3" cy="5.4" r="1"/><circle cx="6.7" cy="7" r=".9"/>',
 stretch:'<circle cx="8" cy="5.2" r="1.9"/><path d="M8 8v5.5l-3.5 6.5M8 13.5l5 2.5 6 .5M9.5 9.5l6.5-1.8"/>',
@@ -934,7 +933,7 @@ alert:'<path d="M12 4.2 21 19.5H3L12 4.2zM12 10v4.2M12 16.8v.4"/>'
 };
 function ico(k,sz,sw){return '<svg class="ic" viewBox="0 0 24 24" width="'+(sz||20)+'" height="'+(sz||20)+'" fill="none" stroke="currentColor" stroke-width="'+(sw||1.9)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(IC[k]||"")+'</svg>';}
 var SESSKIND={A:"up",C:"up",B:"low",D:"low",E:"cardio"},SESSICON={A:"dumbbell",B:"jump",E:"foot",C:"pull",D:"stairs"};
-var EXICON={A1:"push",A2:"pull",A3:"push",A3p:"dumbbell",A4:"pull",A5:"dumbbell",A6:"dumbbell",A7:"core",A8:"flame",B1:"jump",B2:"jump",B3:"legs",B4:"legs",B5:"legs",B5b:"core",B6:"legs",B7:"core",C1:"pull",C2:"pull",C3:"push",C4:"dumbbell",C5:"pull",C6:"dumbbell",C7:"dumbbell",C8:"core",C9:"flame",D1:"legs",D2:"stairs",D3:"legs",D4:"legs",D5:"legs",D6:"legs",D7:"core",E1:"foot",E2:"stretch"};
+var EXICON={A1:"push",A2:"pull",A3:"push",A3p:"dumbbell",A4:"pull",A5:"dumbbell",A6:"dumbbell",A7:"core",A8:"flame",B1:"jump",B2:"jump",B3:"legs",B4:"legs",B5:"curl",B5b:"core",B6:"legs",B7:"core",C1:"pull",C2:"pull",C3:"push",C4:"dumbbell",C5:"pull",C6:"dumbbell",C7:"dumbbell",C8:"core",C9:"flame",D1:"legs",D2:"stairs",D3:"legs",D4:"legs",D5:"legs",D6:"legs",D7:"core",E1:"foot",E2:"stretch"};
 function hueKind(id){return (id==="A8"||id==="C9"||id.charAt(0)==="E")?"cardio":(SESSKIND[id.charAt(0)]||"misc");}
 function hueStyle(kind){var m={up:["--c-up","--c-up-soft"],low:["--c-low","--c-low-soft"],cardio:["--c-cardio","--c-cardio-soft"],misc:["--c-misc","--c-misc-soft"]}[kind]||["--c-misc","--c-misc-soft"];return "--hue:var("+m[0]+");--tint:var("+m[1]+")";}
 function exStyle(id){return ' style="'+hueStyle(hueKind(id))+'"';}
