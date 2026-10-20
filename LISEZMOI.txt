@@ -1,4 +1,4 @@
-CARNET V6.2 — installer l'app sur ton téléphone
+CARNET V6.3 — installer l'app sur ton téléphone
 
 Tes données restent uniquement sur ton téléphone (stockage du navigateur).
 Rien n'est envoyé à Claude ni ailleurs. Pense à exporter une sauvegarde
@@ -8,8 +8,9 @@ Mettre l'app en ligne gratuitement avec GitHub Pages (10 min, une seule fois) :
 1. Crée un compte gratuit sur https://github.com
 2. Clique sur « New repository », nomme-le « carnet », laisse-le Public,
    puis « Create repository ».
-3. Clique sur « uploading an existing file » et dépose les 7 fichiers de ce dossier
-   (index.html, sw.js, manifest.webmanifest et les 4 images .png).
+3. Clique sur « uploading an existing file » et dépose les fichiers de ce dossier
+   (index.html, app.js, styles.css, sw.js, manifest.webmanifest, les 4 images .png
+   et le dossier fonts).
    Valide avec « Commit changes ».
 4. Va dans Settings > Pages. Dans « Branch », choisis « main » et « / (root) »,
    puis « Save ».
@@ -24,8 +25,8 @@ Sur le téléphone :
 L'app marche ensuite hors connexion. Le code est public sur GitHub,
 mais tes séances ne quittent jamais ton téléphone.
 
-Mettre à jour l'app plus tard : remplace index.html sur GitHub par la nouvelle
-version. Tes données ne sont pas touchées.
+Mettre à jour l'app plus tard : remplace index.html, app.js, styles.css et sw.js sur
+GitHub par les nouvelles versions. Tes données ne sont pas touchées.
 
 NOUVEAUTÉS (build 13)
 - Menu ☰ à gauche : semaine, plan, séances (avec coches), progrès, règles.
@@ -35,3 +36,21 @@ NOUVEAUTÉS (build 13)
 - Minuteur automatique : le repos démarre quand tu notes une série (réglable).
 - Douleur par zone : choisis la zone après la séance, l'app te prévient au-dessus de 3/10.
 - Badge Record sur les exercices, page Records et ratio poussée / tirage dans Progrès.
+
+NOUVEAUTÉS (V6.3, build 14)
+- Calendrier sans fin : après S21, cycles de 5 semaines normales + 1 semaine légère.
+  Le programme prévu jusqu'à S21 ne change pas.
+- Coach adaptatif : champ « RIR atteint », tendance sur les 3 dernières séances,
+  objectif de reps ou charge indicative. Ce sont des repères, pas des ordres.
+- Séance en cours (menu ☰) : un exercice à la fois, boutons Précédent / Suivant
+  toujours visibles, reprise après fermeture de la page.
+- Séances déplaçables dans la semaine (Plan) et formats 45 / 30 min qui gardent
+  les exercices prioritaires (ce sont des formats, pas une durée garantie).
+- Statistiques corrigées : « 2 × 20 kg » = 40 kg de charge externe, exercices
+  unilatéraux comptés des deux côtés, 1RM estimé avec poids du corps seulement si
+  tu l'as noté. Graphiques lisibles sur le long terme (fenêtre de 36 semaines).
+- Code séparé en index.html / app.js / styles.css.
+- Sécurité : le jeton GitHub de synchronisation n'est plus gardé durablement ;
+  il reste en mémoire de session. À chaque nouvelle ouverture du navigateur,
+  ressaisis-le dans Plan > Synchronisation (la synchro est en pause sinon).
+  Tes données, sauvegardes JSON et réglages existants restent compatibles.
