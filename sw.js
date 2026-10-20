@@ -1,6 +1,6 @@
 /* Carnet V6.2 : mise en cache pour fonctionner hors connexion. Aucune donnée d'entraînement ne passe par ici. */
-const CACHE = "carnet-v62-13";
-const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./apple-touch-icon.png", "./fonts/archivo-latin.woff2", "./fonts/archivo-latin-ext.woff2"];
+const CACHE = "carnet-v63-14";
+const ASSETS = ["./", "./index.html", "./app.js", "./styles.css", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./apple-touch-icon.png", "./fonts/archivo-latin.woff2", "./fonts/archivo-latin-ext.woff2"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS))); self.skipWaiting(); });
 self.addEventListener("activate", e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
